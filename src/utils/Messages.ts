@@ -1,5 +1,5 @@
 export const Messages = {
 //ERRORS
-'LOGIN_FAILED':"Login Failed!"
-
+'SIMPLE_FAILED':"Failed",
+'SIMPLE_SUCCESS': "Success" 
 }
