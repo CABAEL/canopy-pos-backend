@@ -1,49 +1,34 @@
 import { Request, Response } from 'express'; 
 import fs from 'fs'
 import path from 'path'
-
-// const logData = (data: string) => {
-//     const { monthNameYear, dateYMD } = getCurrentDateFormatted();
-//     const logsDir = path.join(__dirname, 'runtime/logs', monthNameYear);
-//     const logFileName = `${dateYMD}.log`;
-//     const logFilePath = path.join(logsDir, logFileName);
-
-//     // Ensure the directory exists
-//     fs.mkdirSync(logsDir, { recursive: true });
-
-//     // Append the data to the log file, creating the file if it doesn't exist
-//     fs.appendFileSync(logFilePath, `${new Date().toISOString()} - ${data}\n`, { encoding: 'utf-8' });
-
-// };
+import {Messages} from '../utils/Messages'
 
 interface ResponseData {
     response_code:number,
     msg:string,
-    resData:any,
-    req?:any,
-    res?:any
+    resData:{}
 }
 
-export const responseHandler = (responseData: ResponseData) => {
-    const { response_code, msg, resData, res } = responseData;
-
+export const responseHandler = (responseData: ResponseData,req:Request,res:Response) => {
+    
+    const { response_code, msg, resData} = responseData;
     res.status(200).send({ response_code:response_code, msg:msg, data: resData });
 
 }
 
-// function getCurrentDateFormatted(): { monthNameYear: string, dateYMD: string } {
-//     const now = new Date();
-//     const year = now.getFullYear();
-//     const monthNames = ["January", "February", "March", "April", "May", "June",
-//                         "July", "August", "September", "October", "November", "December"];
-//     const monthName = monthNames[now.getMonth()];
-//     const dateYMD = now.toISOString().split('T')[0]; // Formats to YYYY-MM-DD
+export const errResponse = {
+    response_code: 0,
+    msg: Messages.SIMPLE_FAILED,
+    resData: {},
+    req: Response,
+    res: Request
+};
 
-//     return {
-//         monthNameYear: `${monthName}-${year}`,
-//         dateYMD,
-//     };
-// }
+export const successResponse = {
+    response_code: 1,
+    msg: Messages.SIMPLE_SUCCESS,
+    resData: {}
+};
 
 
 

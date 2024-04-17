@@ -8,6 +8,8 @@ import bodyParser from 'body-parser'
 import UserController from './controller/UsersController'
 import LoginController from './controller/LoginController'
 
+import verifyToken from './middleware/VerifyToken'
+
 async function startServer() { 
     try {
 
@@ -21,8 +23,9 @@ async function startServer() {
       const apiRouter = express.Router()
       
       // Define routes
-      apiRouter.use('/users', UserController)
       apiRouter.use('/login', LoginController)
+      apiRouter.use('/users',verifyToken, UserController)
+
 
       app.use('/api', apiRouter)
 
